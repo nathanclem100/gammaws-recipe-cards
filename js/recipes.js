@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
       title: 'Sausage Balls',
       description:
         'Classic Southern appetizer with sausage, cheese, and Bisquick',
-      image: './images/sausage-balls.jpg',
+      image: 'images/sausage-balls.jpg',
       ingredients: [
         '1 pound ground sausage',
         '2 cups Bisquick mix',
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
       id: 2,
       title: 'Sweet Potato Casserole',
       description: 'Creamy sweet potatoes topped with pecan streusel',
-      image: './images/sweet-potato-casserole.jpg',
+      image: 'images/sweet-potato-casserole.jpg',
       ingredients: [
         '4 large sweet potatoes, cooked and mashed',
         '1/2 cup butter, melted',
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
       id: 3,
       title: 'Pecan Pie Cobbler',
       description: 'Gooey pecan pie filling with a golden cobbler crust',
-      image: './images/pecan-pie-cobbler.jpg',
+      image: 'images/pecan-pie-cobbler.jpg',
       ingredients: [
         '2 1/2 cups pecans, chopped',
         '2 cups light corn syrup',
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
       id: 4,
       title: 'Smothered Green Beans',
       description: 'Southern-style green beans with bacon and onions',
-      image: './images/smothered-green-beans.jpg',
+      image: 'images/smothered-green-beans.jpg',
       ingredients: [
         '2 lbs fresh green beans, trimmed',
         '6 slices bacon, chopped',
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
       id: 5,
       title: 'Layered Salad',
       description: 'Beautiful 7-layer salad with creamy dressing',
-      image: './images/layered-salad.jpg',
+      image: 'images/layered-salad.jpg',
       ingredients: [
         'Lettuce, chopped',
         'Cherry tomatoes, halved',
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
       id: 6,
       title: 'Broccoli Salad',
       description: 'Crunchy broccoli salad with bacon and sunflower seeds',
-      image: './images/broccoli-salad.jpg',
+      image: 'images/broccoli-salad.jpg',
       ingredients: [
         '6 cups fresh broccoli florets',
         '1/2 cup red onion, diced',
