@@ -12,15 +12,32 @@ const __dirname = dirname(__filename)
 
 const app = express()
 
+// Enable pre-flight requests for all routes
+app.options('*', cors())
+
 // CORS configuration
-app.use(
-  cors({
-    origin: '*', // Allow all origins for now
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-    optionsSuccessStatus: 200,
-  })
-)
+app.use(cors())
+
+// Add headers before the routes are defined
+app.use(function (req, res, next) {
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*')
+
+  // Request methods you wish to allow
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+  )
+
+  // Request headers you wish to allow
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-Requested-With,content-type,Authorization,Accept'
+  )
+
+  // Pass to next layer of middleware
+  next()
+})
 
 // Middleware
 app.use(express.json())

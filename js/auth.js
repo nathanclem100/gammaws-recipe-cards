@@ -21,6 +21,9 @@ export async function signup(fullName, email, password) {
     console.log('Signup response status:', response.status)
     let data
     try {
+      if (response.status === 0) {
+        throw new Error('Network error - unable to reach the server')
+      }
       data = await response.json()
       console.log('Signup response data:', data)
     } catch (e) {
@@ -39,7 +42,7 @@ export async function signup(fullName, email, password) {
     }
 
     if (!response.ok) {
-      throw new Error(data.message || 'Signup failed')
+      throw new Error(data?.message || 'Signup failed')
     }
 
     localStorage.setItem('token', data.token)
@@ -70,6 +73,9 @@ export async function login(email, password) {
     console.log('Login response status:', response.status)
     let data
     try {
+      if (response.status === 0) {
+        throw new Error('Network error - unable to reach the server')
+      }
       data = await response.json()
       console.log('Login response data:', data)
     } catch (e) {
@@ -88,7 +94,7 @@ export async function login(email, password) {
     }
 
     if (!response.ok) {
-      throw new Error(data.message || 'Login failed')
+      throw new Error(data?.message || 'Login failed')
     }
 
     localStorage.setItem('token', data.token)
