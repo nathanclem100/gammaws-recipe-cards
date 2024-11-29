@@ -17,8 +17,14 @@ export async function signup(fullName, email, password) {
     })
 
     console.log('Signup response status:', response.status)
-    const data = await response.json()
-    console.log('Signup response data:', data)
+    let data
+    try {
+      data = await response.json()
+      console.log('Signup response data:', data)
+    } catch (e) {
+      console.error('Error parsing response:', e)
+      throw new Error('Unable to connect to server. Please try again.')
+    }
 
     if (!response.ok) {
       throw new Error(data.message || 'Signup failed')
@@ -28,7 +34,7 @@ export async function signup(fullName, email, password) {
     localStorage.setItem('userId', data.userId)
     console.log('Stored token:', data.token)
     console.log('Stored userId:', data.userId)
-    window.location.href = '/recipes.html'
+    window.location.href = 'recipes.html'
   } catch (error) {
     console.error('Signup error:', error)
     throw error
@@ -48,8 +54,14 @@ export async function login(email, password) {
     })
 
     console.log('Login response status:', response.status)
-    const data = await response.json()
-    console.log('Login response data:', data)
+    let data
+    try {
+      data = await response.json()
+      console.log('Login response data:', data)
+    } catch (e) {
+      console.error('Error parsing response:', e)
+      throw new Error('Unable to connect to server. Please try again.')
+    }
 
     if (!response.ok) {
       throw new Error(data.message || 'Login failed')
@@ -59,7 +71,7 @@ export async function login(email, password) {
     localStorage.setItem('userId', data.userId)
     console.log('Stored token:', data.token)
     console.log('Stored userId:', data.userId)
-    window.location.href = '/recipes.html'
+    window.location.href = 'recipes.html'
   } catch (error) {
     console.error('Login error:', error)
     throw error
@@ -78,5 +90,5 @@ export function logout() {
   console.log('Logging out...')
   localStorage.removeItem('token')
   localStorage.removeItem('userId')
-  window.location.href = '/index.html'
+  window.location.href = 'index.html'
 }
