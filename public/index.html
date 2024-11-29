@@ -74,7 +74,64 @@
         <p class="signature">Designed by Nathan Clem</p>
       </div>
     </div>
-    <script src="js/auth.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module">
+      import { login, signup } from './js/auth.js'
+
+      const loginForm = document.getElementById('login-form')
+      const signupForm = document.getElementById('signup-form')
+      const tabButtons = document.querySelectorAll('.tab-btn')
+
+      // Handle tab switching
+      tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          tabButtons.forEach((btn) => btn.classList.remove('active'))
+          button.classList.add('active')
+
+          const formType = button.dataset.form
+          document.getElementById(`${formType}-form`).classList.add('active')
+          document
+            .getElementById(formType === 'login' ? 'signup-form' : 'login-form')
+            .classList.remove('active')
+          document.querySelector('h2').textContent = `${
+            formType.charAt(0).toUpperCase() + formType.slice(1)
+          } Form`
+        })
+      })
+
+      // Handle signup form submission
+      signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const formData = new FormData(signupForm)
+        const password = formData.get('password')
+        const confirmPassword = formData.get('confirmPassword')
+
+        if (password !== confirmPassword) {
+          alert('Passwords do not match!')
+          return
+        }
+
+        try {
+          await signup(
+            formData.get('fullName'),
+            formData.get('email'),
+            password
+          )
+        } catch (error) {
+          alert(error.message)
+        }
+      })
+
+      // Handle login form submission
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const formData = new FormData(loginForm)
+
+        try {
+          await login(formData.get('email'), formData.get('password'))
+        } catch (error) {
+          alert(error.message)
+        }
+      })
+    </script>
   </body>
 </html>
