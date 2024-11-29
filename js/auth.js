@@ -12,7 +12,9 @@ export async function signup(fullName, email, password) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
+      mode: 'cors',
       body: JSON.stringify({ fullName, email, password }),
     })
 
@@ -23,7 +25,17 @@ export async function signup(fullName, email, password) {
       console.log('Signup response data:', data)
     } catch (e) {
       console.error('Error parsing response:', e)
-      throw new Error('Unable to connect to server. Please try again.')
+      if (response.status === 0) {
+        throw new Error(
+          'Unable to connect to server. Please check your internet connection.'
+        )
+      } else if (response.status === 404) {
+        throw new Error('Server endpoint not found. Please try again later.')
+      } else if (response.status === 500) {
+        throw new Error('Server error. Please try again later.')
+      } else {
+        throw new Error('Unable to connect to server. Please try again.')
+      }
     }
 
     if (!response.ok) {
@@ -49,7 +61,9 @@ export async function login(email, password) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
+      mode: 'cors',
       body: JSON.stringify({ email, password }),
     })
 
@@ -60,7 +74,17 @@ export async function login(email, password) {
       console.log('Login response data:', data)
     } catch (e) {
       console.error('Error parsing response:', e)
-      throw new Error('Unable to connect to server. Please try again.')
+      if (response.status === 0) {
+        throw new Error(
+          'Unable to connect to server. Please check your internet connection.'
+        )
+      } else if (response.status === 404) {
+        throw new Error('Server endpoint not found. Please try again later.')
+      } else if (response.status === 500) {
+        throw new Error('Server error. Please try again later.')
+      } else {
+        throw new Error('Unable to connect to server. Please try again.')
+      }
     }
 
     if (!response.ok) {

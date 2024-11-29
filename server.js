@@ -13,27 +13,11 @@ const __dirname = dirname(__filename)
 const app = express()
 
 // CORS configuration
-const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || [
-  'http://localhost:3000',
-]
-console.log('Allowed CORS origins:', allowedOrigins)
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true)
-
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          'The CORS policy for this site does not allow access from the specified Origin.'
-        return callback(new Error(msg), false)
-      }
-      return callback(null, true)
-    },
+    origin: '*', // Allow all origins for now
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     optionsSuccessStatus: 200,
   })
 )
