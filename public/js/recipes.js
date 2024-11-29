@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost:3000/api'
+const API_URL =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:3000/api'
+    : 'https://gammaws-recipe-cards-production.up.railway.app/api'
 
 // Get auth token
 function getToken() {

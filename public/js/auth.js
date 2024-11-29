@@ -1,4 +1,8 @@
-const API_URL = 'http://localhost:3000/api'
+// Use production URL in production, localhost in development
+const API_URL =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:3000/api'
+    : 'https://gammaws-recipe-cards-production.up.railway.app/api'
 
 // Handle signup
 export async function signup(fullName, email, password) {
