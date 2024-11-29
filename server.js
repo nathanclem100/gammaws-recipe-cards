@@ -26,11 +26,33 @@ app.use((req, res, next) => {
   next()
 })
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    mongodb:
+      mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    timestamp: new Date().toISOString(),
+  })
+})
+
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err))
+  .then(() => {
+    console.log('Connected to MongoDB')
+    console.log(
+      'MongoDB URI:',
+      process.env.MONGODB_URI.replace(/\/\/[^:]+:[^@]+@/, '//***:***@')
+    ) // Log URI with hidden credentials
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err)
+    console.log(
+      'Attempted MongoDB URI:',
+      process.env.MONGODB_URI.replace(/\/\/[^:]+:[^@]+@/, '//***:***@')
+    ) // Log URI with hidden credentials
+  })
 
 // Routes
 app.use('/api/auth', authRoutes)
