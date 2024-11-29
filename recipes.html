@@ -46,6 +46,68 @@
       <p>Designed by Nathan Clem</p>
     </footer>
 
-    <script src="js/recipes.js"></script>
+    <script type="module">
+      import { isAuthenticated, logout } from './js/auth.js'
+      import {
+        getRecipes,
+        createRecipe,
+        updateRecipe,
+        deleteRecipe,
+        viewRecipe,
+      } from './js/recipes.js'
+
+      // Check authentication
+      if (!isAuthenticated()) {
+        window.location.href = 'index.html'
+      }
+
+      // Setup logout button
+      document.querySelector('.logout-btn').addEventListener('click', logout)
+
+      // Load recipes on page load
+      async function loadRecipes() {
+        try {
+          const recipes = await getRecipes()
+          const recipeGrid = document.querySelector('.recipe-grid')
+          recipeGrid.innerHTML = recipes
+            .map(
+              (recipe) => `
+            <div class="recipe-card" onclick="viewRecipe('${recipe._id}')">
+              <img src="${recipe.image || 'images/default-recipe.jpg'}" alt="${
+                recipe.title
+              }" class="recipe-image">
+              <div class="recipe-info">
+                <h3>${recipe.title}</h3>
+                <p>Cooking Time: ${recipe.cookingTime} minutes</p>
+                <p>Servings: ${recipe.servings}</p>
+              </div>
+            </div>
+          `
+            )
+            .join('')
+        } catch (error) {
+          console.error('Error loading recipes:', error)
+          alert('Failed to load recipes')
+        }
+      }
+
+      // Make functions available globally
+      window.viewRecipe = viewRecipe
+      window.loadRecipes = loadRecipes
+
+      // Load recipes when page loads
+      loadRecipes()
+
+      // Setup search functionality
+      document.getElementById('searchInput').addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase()
+        const recipeCards = document.querySelectorAll('.recipe-card')
+
+        recipeCards.forEach((card) => {
+          const title = card.querySelector('h3').textContent.toLowerCase()
+          card.style.display = title.includes(searchTerm) ? 'block' : 'none'
+        })
+      })
+    </script>
   </body>
 </html>
